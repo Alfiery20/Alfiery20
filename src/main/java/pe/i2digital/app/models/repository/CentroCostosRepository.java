@@ -9,6 +9,7 @@ import java.util.List;
 import java.util.Optional;
 
 import org.springframework.data.jpa.repository.Query;
+import org.springframework.data.jpa.repository.query.Procedure;
 import org.springframework.data.repository.CrudRepository;
 import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
@@ -75,6 +76,30 @@ public interface CentroCostosRepository extends CrudRepository<CentroCostos, Int
     //3.-x SQL Nativo: Listar
     @Query(nativeQuery = true)
     public List<CentroCostos> findAllNative();
+
+    //Consulta avanzadas: funciones "que devulve informacion"
+    @Query(value ="select version()" ,nativeQuery = true)
+    public String getVersion();
+
+    @Procedure("version")
+    public String getVersionProcedure();
+
+    @Procedure("sh_empresa_20441636831.fn_at_json_iud_row_centrocostos")
+    public String generateIUDRowProcedure(
+        @Param("accion") String accion,
+        @Param("centrocostos_id") Integer id,
+        @Param("centrocostos_cod") String codigo,
+        @Param("centrocostos_nom") String nombre
+    );
+
+    @Query(value = "select sh_empresa_20441636831.fn_at_json_iud_row_centrocostos" +
+            "(:accion,:centrocostos_id,:centrocostos_cod,:centrocostos_nom)" ,nativeQuery = true)
+    public String generateIUDRow(
+            @Param("accion") String accion,
+            @Param("centrocostos_id") Integer id,
+            @Param("centrocostos_cod") String codigo,
+            @Param("centrocostos_nom") String nombre
+    );
 }
                                                          
 

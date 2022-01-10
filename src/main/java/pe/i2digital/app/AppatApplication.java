@@ -8,17 +8,33 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
+import pe.i2digital.app.models.dao.AsientoContableDAO;
+import pe.i2digital.app.models.dao.DetalleAsientoContableDAO;
+import pe.i2digital.app.models.dao.GenericDAO;
 import pe.i2digital.app.models.entity.CentroCostos;
 import pe.i2digital.app.models.repository.CentroCostosRepository;
+import pe.i2digital.app.models.repository.CuentaContableRepository;
+import pe.i2digital.app.models.repository.EstacionTrabajoRepository;
 import pe.i2digital.app.service.CentroCostosService;
+import pe.i2digital.app.service.EstacionTrabajoService;
 
 @SpringBootApplication
 public class AppatApplication implements CommandLineRunner {
-    //Solo era iniciarlo?SiAhhhVale vale Gracias
+
     @Autowired
     private CentroCostosRepository repository;
     @Autowired
     private CentroCostosService service;
+    @Autowired
+    private GenericDAO genericDAO;
+    @Autowired
+    private AsientoContableDAO asientoContableDAO;
+    @Autowired
+    private DetalleAsientoContableDAO detalleAsientoContableDAO;
+    @Autowired
+    private CuentaContableRepository cuentaContableRepository;
+    @Autowired
+    private EstacionTrabajoService estacionTrabajoService;
 
     public static void main(String[] args) {
         SpringApplication.run(AppatApplication.class, args);
@@ -26,8 +42,87 @@ public class AppatApplication implements CommandLineRunner {
 
     @Override
     public void run(String... args) throws Exception {
-        //testReadCentroCostos();
-        //testCRUDCentroCostos();
+        testIudFuncion();
+    }
+
+    private void testIudFuncion(){
+        String Respuesta = repository.generateIUDRow("I",null, "06" , "TEST ");
+        System.out.println(Respuesta);
+        List<CentroCostos> lista = (List<CentroCostos>) repository.findAll();
+        for (CentroCostos c:lista) {
+            System.out.println(c.getId() + " - " + c.getCodigo() + " - " + c.getNombre());
+        }
+    }
+
+    private void testIudFuncionProcedure(){
+        String Respuesta = repository.generateIUDRowProcedure("D",8, null , null);
+        System.out.println(Respuesta);
+        List<CentroCostos> lista = (List<CentroCostos>) repository.findAll();
+        for (CentroCostos c:lista) {
+            System.out.println(c.getId() + " - " + c.getCodigo() + " - " + c.getNombre());
+        }
+    }
+
+    private void testListarArtificio(){
+        var list = estacionTrabajoService.busquedaPersonalizada();
+        for (var item : list) {
+            System.out.println(item.getId() + " - " + item.getCodigo() + " - " + item.getNombre());
+        }
+    };
+
+    private void testListarSinTipificar(){
+        var lista = cuentaContableRepository.cuentaDiferenciaCambioDocumentos();
+        for (var item : lista) {
+            System.out.println(item[0] + " - " + item[1] +" - " + item[2]);
+        }
+    }
+
+    private void testSeguimientoDocumentos(){
+        /*var lista = detalleAsientoContableDAO.seguimientoDocumentos("sh_empresa_20441636831", "2020",38);
+        for (var e :lista) {
+            System.out.println("-----DA PROPOSITO" + e.getProposito()
+                    + " DA TIPO: " +e.getTipo()
+                    + " DA IMPORTE SOLES " + e.getImporteSoles()
+                    + " AC ID: " + e.getOAsientoContable().getId()
+                    + " AC GLOSA: "+ e.getOAsientoContable().getGlosa()
+                    + " TOC CODIGO: " + e.getOAsientoContable().getOTipoOperacionContable().getCodigo()
+                    + " D MONEDA: " + e.getODocumento().getMoneda() + "------");
+        }
+        */
+        var lista = detalleAsientoContableDAO.seguimientoDocumentos2("sh_empresa_20441636831", "2020",38);
+        for (var e :lista) {
+            System.out.println("-----DA PROPOSITO" + e.getProposito()
+                    + " DA TIPO: " +e.getTipo()
+                    + " DA IMPORTE SOLES " + e.getImporteSoles()
+                    + " AC ID: " + e.getOAsientoContable().getId()
+                    + " AC GLOSA: "+ e.getOAsientoContable().getGlosa()
+                    + " TOC CODIGO: " + e.getOAsientoContable().getOTipoOperacionContable().getCodigo()
+                    + " D MONEDA: " + e.getODocumento().getMoneda() + "------");
+        }
+    }
+
+    private void TestAsientoContable(){
+        var lista = asientoContableDAO.busquedaExcel("2020",38);
+        for (var e : lista) {
+            System.out.println(e.getGlosa() + " - "
+                    +e.getNumero() + " - "
+                    + e.getCuentaContable() + " - "
+                    +e.getDebeSoles());
+        }
+    }
+
+    private void testVersion(){
+        String version = repository.getVersion();
+        System.out.println("VERSION F1: " +version);
+        version = repository.getVersionProcedure();
+        System.out.println("VERSION F2: " +version);
+        version = genericDAO.getVersion();
+        System.out.println("VERSION F3: " +version);
+        version = genericDAO.getFechaActual();
+        System.out.println("FECHA ACTUAL F1: " +version);
+        //Test con hibernate
+        version = genericDAO.version();
+        System.out.println("VERSION F4: " +version);
     }
 
     private void testCRUDCentroCostos() {
