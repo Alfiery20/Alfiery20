@@ -33,7 +33,6 @@ public class SeguimientoDocumentoMapper implements RowMapper<DetalleAsientoConta
                 .importeSoles(rs.getDouble("tb_detalleasientocontable_impsol"))
                 .importeDolares(rs.getDouble("tb_detalleasientocontable_impdol"))
                 .build();
-
         return oMapper;
     }
 }

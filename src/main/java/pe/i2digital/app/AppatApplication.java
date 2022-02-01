@@ -8,15 +8,16 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
-import pe.i2digital.app.models.dao.AsientoContableDAO;
-import pe.i2digital.app.models.dao.DetalleAsientoContableDAO;
-import pe.i2digital.app.models.dao.GenericDAO;
+import pe.i2digital.app.models.dao.*;
 import pe.i2digital.app.models.entity.CentroCostos;
+import pe.i2digital.app.models.entity.CuentaContable;
 import pe.i2digital.app.models.repository.CentroCostosRepository;
 import pe.i2digital.app.models.repository.CuentaContableRepository;
 import pe.i2digital.app.models.repository.EstacionTrabajoRepository;
+import pe.i2digital.app.models.udt.DestinoCompraUDT;
 import pe.i2digital.app.service.CentroCostosService;
 import pe.i2digital.app.service.EstacionTrabajoService;
+
 
 @SpringBootApplication
 public class AppatApplication implements CommandLineRunner {
@@ -35,6 +36,10 @@ public class AppatApplication implements CommandLineRunner {
     private CuentaContableRepository cuentaContableRepository;
     @Autowired
     private EstacionTrabajoService estacionTrabajoService;
+    @Autowired
+    private CentroCostosDAO centroCostosDAO;
+    @Autowired
+    private CuentaContableDAO cuentaContableDAO;
 
     public static void main(String[] args) {
         SpringApplication.run(AppatApplication.class, args);
@@ -42,42 +47,111 @@ public class AppatApplication implements CommandLineRunner {
 
     @Override
     public void run(String... args) throws Exception {
-        testIudFuncion();
+        testUDTArray();
     }
 
-    private void testIudFuncion(){
-        String Respuesta = repository.generateIUDRow("I",null, "06" , "TEST ");
-        System.out.println(Respuesta);
+    private void testUDTArray() throws Exception {
+        String respuesta = null;
+        ///-------Probar iudJson con udt: 2° forma de transaccion en DAO
+        //AQUI NO FUNCIONA
+        var cuentaContable3 = new CuentaContable();
+        cuentaContable3.setId(3376);
+        cuentaContable3.setNumero("603411");
+        cuentaContable3.setNombre("COMBUST");
+        cuentaContable3.setMoneda("A");
+        DestinoCompraUDT[] aDestinoCompra = new DestinoCompraUDT[]{
+                new DestinoCompraUDT("D", 50.0, 3376, 423),
+                new DestinoCompraUDT("H", 70.0, 3376, 2138)
+        };
+        respuesta = cuentaContableDAO.iudJson("sh_empresa_20441636831", "U", cuentaContable3, false, aDestinoCompra);
+
+        ///-------Probar iudJson con udt: 1° forma de transaccion en DAO
+        /*var cuentaContable3 = new CuentaContable();
+        cuentaContable3.setNumero("603411");
+        cuentaContable3.setNombre("COMBUSTIBLE");
+        cuentaContable3.setMoneda("A");
+
+        DestinoCompraUDT[] aDestinoCompra = new DestinoCompraUDT[]{
+                new DestinoCompraUDT("D", 100.0, null, 423),
+                new DestinoCompraUDT("H", 100.0, null, 2138)
+        };
+        respuesta = cuentaContableDAO.iudJsonV2("sh_empresa_20441636831", "I", cuentaContable3, true, aDestinoCompra);
+         */
+        ///-------Probar iudJsonV2 sin udt: 1° forma de transaccion en DAO
+        /*var cuentaContable2  = new CuentaContable();
+        cuentaContable2.setNumero("60341");
+        cuentaContable2.setNombre("COMBUSTIBLE");
+        respuesta = cuentaContableDAO.iudJson("sh_empresa_20441636831", "I", cuentaContable2,null, null);
+        */
+        /*
+        var cuentaContable1  = new CuentaContable();
+        cuentaContable1.setNumero("6034");
+        cuentaContable1.setNombre("COMBUSTIBLE");
+        respuesta = cuentaContableDAO.iudJsonV2("sh_empresa_20441636831", "I", cuentaContable1,null, null);
+        */
+        ///-------Probar iudJsonV2 sin udt: 2° forma de transaccion en DAO
+        /*var cuentaContable1  = new CuentaContable();
+        cuentaContable1.setNumero("603411");
+        cuentaContable1.setNombre("COMBUSTIBLE");
+        cuentaContable1.setMoneda("A");
+        DestinoCompraUDT[] aDestinoCompra = new DestinoCompraUDT[]{
+                new DestinoCompraUDT("D", 100.00, 0,423),
+                new DestinoCompraUDT("H", 100.00, 0,2138)
+        };
+        respuesta = cuentaContableDAO.iudJsonV2("sh_empresa_20441636831", "I", cuentaContable1,true, aDestinoCompra);
+        */
+        /*Eliminar tampoco funciona
+        var cuentaContable3 = new CuentaContable();
+        cuentaContable3.setId(3376);
+        respuesta = cuentaContableDAO.iudJson("sh_empresa_20441636831", "D", CuentaContable.builder().id(3376).numero("603411").build(), null, null);
+        */
+        System.out.println(respuesta);
+    }
+
+    private void testIudDAO() throws Exception {
+        String respuesta = null;
+        respuesta = centroCostosDAO.iudJson(new CentroCostos(9, null, null), "D", "sh_empresa_20441636831");
         List<CentroCostos> lista = (List<CentroCostos>) repository.findAll();
-        for (CentroCostos c:lista) {
+        for (CentroCostos c : lista) {
             System.out.println(c.getId() + " - " + c.getCodigo() + " - " + c.getNombre());
         }
     }
 
-    private void testIudFuncionProcedure(){
-        String Respuesta = repository.generateIUDRowProcedure("D",8, null , null);
+    private void testIudFuncion() {
+        String Respuesta = repository.generateIUDRow("I", null, "06", "TEST ");
         System.out.println(Respuesta);
         List<CentroCostos> lista = (List<CentroCostos>) repository.findAll();
-        for (CentroCostos c:lista) {
+        for (CentroCostos c : lista) {
             System.out.println(c.getId() + " - " + c.getCodigo() + " - " + c.getNombre());
         }
     }
 
-    private void testListarArtificio(){
+    private void testIudFuncionProcedure() {
+        String Respuesta = repository.generateIUDRowProcedure("D", 8, null, null);
+        System.out.println(Respuesta);
+        List<CentroCostos> lista = (List<CentroCostos>) repository.findAll();
+        for (CentroCostos c : lista) {
+            System.out.println(c.getId() + " - " + c.getCodigo() + " - " + c.getNombre());
+        }
+    }
+
+    private void testListarArtificio() {
         var list = estacionTrabajoService.busquedaPersonalizada();
         for (var item : list) {
             System.out.println(item.getId() + " - " + item.getCodigo() + " - " + item.getNombre());
         }
-    };
+    }
 
-    private void testListarSinTipificar(){
+    ;
+
+    private void testListarSinTipificar() {
         var lista = cuentaContableRepository.cuentaDiferenciaCambioDocumentos();
         for (var item : lista) {
-            System.out.println(item[0] + " - " + item[1] +" - " + item[2]);
+            System.out.println(item[0] + " - " + item[1] + " - " + item[2]);
         }
     }
 
-    private void testSeguimientoDocumentos(){
+    private void testSeguimientoDocumentos() {
         /*var lista = detalleAsientoContableDAO.seguimientoDocumentos("sh_empresa_20441636831", "2020",38);
         for (var e :lista) {
             System.out.println("-----DA PROPOSITO" + e.getProposito()
@@ -89,40 +163,40 @@ public class AppatApplication implements CommandLineRunner {
                     + " D MONEDA: " + e.getODocumento().getMoneda() + "------");
         }
         */
-        var lista = detalleAsientoContableDAO.seguimientoDocumentos2("sh_empresa_20441636831", "2020",38);
-        for (var e :lista) {
+        var lista = detalleAsientoContableDAO.seguimientoDocumentos2("sh_empresa_20441636831", "2020", 38);
+        for (var e : lista) {
             System.out.println("-----DA PROPOSITO" + e.getProposito()
-                    + " DA TIPO: " +e.getTipo()
+                    + " DA TIPO: " + e.getTipo()
                     + " DA IMPORTE SOLES " + e.getImporteSoles()
                     + " AC ID: " + e.getOAsientoContable().getId()
-                    + " AC GLOSA: "+ e.getOAsientoContable().getGlosa()
+                    + " AC GLOSA: " + e.getOAsientoContable().getGlosa()
                     + " TOC CODIGO: " + e.getOAsientoContable().getOTipoOperacionContable().getCodigo()
                     + " D MONEDA: " + e.getODocumento().getMoneda() + "------");
         }
     }
 
-    private void TestAsientoContable(){
-        var lista = asientoContableDAO.busquedaExcel("2020",38);
+    private void TestAsientoContable() {
+        var lista = asientoContableDAO.busquedaExcel("2020", 38);
         for (var e : lista) {
             System.out.println(e.getGlosa() + " - "
-                    +e.getNumero() + " - "
+                    + e.getNumero() + " - "
                     + e.getCuentaContable() + " - "
-                    +e.getDebeSoles());
+                    + e.getDebeSoles());
         }
     }
 
-    private void testVersion(){
+    private void testVersion() {
         String version = repository.getVersion();
-        System.out.println("VERSION F1: " +version);
+        System.out.println("VERSION F1: " + version);
         version = repository.getVersionProcedure();
-        System.out.println("VERSION F2: " +version);
+        System.out.println("VERSION F2: " + version);
         version = genericDAO.getVersion();
-        System.out.println("VERSION F3: " +version);
+        System.out.println("VERSION F3: " + version);
         version = genericDAO.getFechaActual();
-        System.out.println("FECHA ACTUAL F1: " +version);
+        System.out.println("FECHA ACTUAL F1: " + version);
         //Test con hibernate
         version = genericDAO.version();
-        System.out.println("VERSION F4: " +version);
+        System.out.println("VERSION F4: " + version);
     }
 
     private void testCRUDCentroCostos() {
@@ -195,7 +269,7 @@ public class AppatApplication implements CommandLineRunner {
             System.out.println("Lista4 - " + c.getCodigo() + " - " + c.getNombre());
         }
 
-        List<CentroCostos> list5 = repository.findByIdAfterAndNombreStartingWithIgnoreCase(04,"GRI");
+        List<CentroCostos> list5 = repository.findByIdAfterAndNombreStartingWithIgnoreCase(04, "GRI");
         for (CentroCostos c : list5) {
             System.out.println("Lista5 - " + c.getCodigo() + " - " + c.getNombre());
         }
@@ -203,7 +277,7 @@ public class AppatApplication implements CommandLineRunner {
         var list6 = repository.busquedaJPQLxCodigo("04").orElse(null);
         System.out.println("Lista6 - " + list6.getNombre());
 
-        List<CentroCostos> list7 = repository.busquedaJPQLxIdxNombrePerzonalizado(04,"GRI");
+        List<CentroCostos> list7 = repository.busquedaJPQLxIdxNombrePerzonalizado(04, "GRI");
         for (CentroCostos c : list7) {
             System.out.println("Lista7 - " + c.getCodigo() + " - " + c.getNombre());
         }
@@ -211,7 +285,7 @@ public class AppatApplication implements CommandLineRunner {
         var list8 = repository.busquedaxCodigo("01").orElse(null);
         System.out.println("Lista8 - " + list8.getNombre());
 
-        List<CentroCostos> list9 = repository.busquedaxIdxNombrePerzonalizado(04,"GRI");
+        List<CentroCostos> list9 = repository.busquedaxIdxNombrePerzonalizado(04, "GRI");
         for (CentroCostos c : list9) {
             System.out.println("Lista9 - " + c.getCodigo() + " - " + c.getNombre());
         }
