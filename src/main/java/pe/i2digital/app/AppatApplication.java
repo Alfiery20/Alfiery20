@@ -47,24 +47,24 @@ public class AppatApplication implements CommandLineRunner {
 
     @Override
     public void run(String... args) throws Exception {
-        testUDTArray();
+        //testUDTArray();
     }
 
     private void testUDTArray() throws Exception {
         String respuesta = null;
         ///-------Probar iudJson con udt: 2° forma de transaccion en DAO
-        //AQUI NO FUNCIONA
+        /*
         var cuentaContable3 = new CuentaContable();
         cuentaContable3.setId(3376);
         cuentaContable3.setNumero("603411");
-        cuentaContable3.setNombre("COMBUST");
+        cuentaContable3.setNombre("COMBUSTIBLE - MODIFICADO");
         cuentaContable3.setMoneda("A");
         DestinoCompraUDT[] aDestinoCompra = new DestinoCompraUDT[]{
-                new DestinoCompraUDT("D", 50.0, 3376, 423),
-                new DestinoCompraUDT("H", 70.0, 3376, 2138)
+                new DestinoCompraUDT("D", 30.0, 3376, 423),
+                new DestinoCompraUDT("H", 10.0, 3376, 2138)
         };
         respuesta = cuentaContableDAO.iudJson("sh_empresa_20441636831", "U", cuentaContable3, false, aDestinoCompra);
-
+        */
         ///-------Probar iudJson con udt: 1° forma de transaccion en DAO
         /*var cuentaContable3 = new CuentaContable();
         cuentaContable3.setNumero("603411");
@@ -100,12 +100,12 @@ public class AppatApplication implements CommandLineRunner {
         };
         respuesta = cuentaContableDAO.iudJsonV2("sh_empresa_20441636831", "I", cuentaContable1,true, aDestinoCompra);
         */
-        /*Eliminar tampoco funciona
-        var cuentaContable3 = new CuentaContable();
-        cuentaContable3.setId(3376);
-        respuesta = cuentaContableDAO.iudJson("sh_empresa_20441636831", "D", CuentaContable.builder().id(3376).numero("603411").build(), null, null);
-        */
+        /*
+        respuesta = cuentaContableDAO.iudJsonV2("sh_empresa_20441636831", "D", CuentaContable.builder().id(3378).numero("60341").build(), null, null);
         System.out.println(respuesta);
+        respuesta = cuentaContableDAO.iudJsonV2("sh_empresa_20441636831", "D", CuentaContable.builder().id(3377).numero("6034").build(), null, null);
+        System.out.println(respuesta);
+        */
     }
 
     private void testIudDAO() throws Exception {

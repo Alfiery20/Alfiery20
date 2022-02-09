@@ -22,44 +22,44 @@ public class CuentaContableDAOImpl implements CuentaContableDAO {
     SessionFactory sessionFactory;
 
     @Override
-    public String iudJsonV2(String schema, String accion, CuentaContable objeto, Boolean updateD, DestinoCompraUDT[] aDestinoCompra) throws Exception{
+    public String iudJsonV2(String schema, String accion, CuentaContable objeto, Boolean updateD, DestinoCompraUDT[] aDestinoCompra) throws Exception {
         var session = sessionFactory.openSession();
-        try(session) {
+        try (session) {
             ObjectMapper mapper = new ObjectMapper();
             session.getTransaction().begin();
             String answer = session.doReturningWork(cnx -> {
-                try{
-                    String sql = String.format("select %s.fn_at_json_iud_row_cuentacontablev2(?::character,?,?,?,?::character,?,?,?)",schema);
+                try {
+                    String sql = String.format("select %s.fn_at_json_iud_row_cuentacontablev2(?::character,?,?,?,?::character,?,?,?)", schema);
                     PreparedStatement ps = cnx.prepareStatement(sql);
-                    int index=0;
-                    ps.setObject(++index,accion, Types.CHAR);
-                    ps.setObject(++index,objeto.getId(), Types.INTEGER);
-                    ps.setObject(++index,objeto.getNumero(), Types.VARCHAR);
-                    ps.setObject(++index,objeto.getNombre(), Types.VARCHAR);
-                    ps.setObject(++index,objeto.getMoneda(), Types.CHAR);
-                    ps.setObject(++index,objeto.getUsaDocumento(), Types.BOOLEAN);
-                    ps.setObject(++index,updateD, Types.BOOLEAN);
-                    Array inArray =Objects.nonNull(aDestinoCompra)?cnx.createArrayOf(String.format(DestinoCompraUDT.TYPE_NAME, schema),aDestinoCompra):null;
-                    ps.setObject(++index,inArray, Types.ARRAY);
+                    int index = 0;
+                    ps.setObject(++index, accion, Types.CHAR);
+                    ps.setObject(++index, objeto.getId(), Types.INTEGER);
+                    ps.setObject(++index, objeto.getNumero(), Types.VARCHAR);
+                    ps.setObject(++index, objeto.getNombre(), Types.VARCHAR);
+                    ps.setObject(++index, objeto.getMoneda(), Types.CHAR);
+                    ps.setObject(++index, objeto.getUsaDocumento(), Types.BOOLEAN);
+                    ps.setObject(++index, updateD, Types.BOOLEAN);
+                    Array inArray = Objects.nonNull(aDestinoCompra) ? cnx.createArrayOf(String.format(DestinoCompraUDT.TYPE_NAME, schema), aDestinoCompra) : null;
+                    ps.setObject(++index, inArray, Types.ARRAY);
 
                     ResultSet rs = ps.executeQuery();
-                    String dato=null;
-                    if(Objects.nonNull(rs)) {
+                    String dato = null;
+                    if (Objects.nonNull(rs)) {
                         if (rs.next()) {
-                            dato=rs.getString(1);
+                            dato = rs.getString(1);
                         }
                         rs.close();
                     }
                     ps.close();
 
                     return dato;
-                }catch (Exception ex) {
+                } catch (Exception ex) {
                     throw new HibernateException(ex);
                 }
             });
-            Map<String,Object> map = mapper.readValue(answer, new TypeReference<Map<String, Object>>() {});
-            if(Objects.nonNull(map) && Objects.equals(map.get("msj"),"OK"))
-                session.getTransaction().commit();
+            Map<String, Object> map = mapper.readValue(answer, new TypeReference<Map<String, Object>>() {
+            });
+            if (Objects.nonNull(map) && Objects.equals(map.get("msj"), "OK")) session.getTransaction().commit();
             else session.getTransaction().rollback();
             return answer;
         }
@@ -67,30 +67,30 @@ public class CuentaContableDAOImpl implements CuentaContableDAO {
 
     @Override
     public String iudJson(String schema, String accion, CuentaContable objeto, Boolean updateD, DestinoCompraUDT[] aDestinoCompra) throws Exception {
-        try(Connection cnx =jdbcTemplate.getDataSource().getConnection()) {
+        try (Connection cnx = jdbcTemplate.getDataSource().getConnection()) {
             cnx.setSchema(schema);
             cnx.setAutoCommit(false);
             ObjectMapper mapper = new ObjectMapper();
             //"char" <> character(n) or char(n)
-            String sql = String.format("{ ? = call fn_at_json_iud_row_cuentacontablev2(?::character,?,?,?,?::character,?,?,?::%s.tp_at_destinocompra[]) }",schema);
-            CallableStatement cstm =  cnx.prepareCall(sql);
+            String sql = String.format("{ ? = call fn_at_json_iud_row_cuentacontablev2(?::character,?,?,?,?::character,?,?,?::%s.tp_at_destinocompra[]) }", schema);
+            CallableStatement cstm = cnx.prepareCall(sql);
             int index = 0;
             cstm.registerOutParameter(++index, Types.VARCHAR);
-            cstm.setObject(++index,accion, Types.CHAR);
-            cstm.setObject(++index,objeto.getId(), Types.INTEGER);
-            cstm.setObject(++index,objeto.getNumero(), Types.VARCHAR);
-            cstm.setObject(++index,objeto.getNombre(), Types.VARCHAR);
-            cstm.setObject(++index,objeto.getMoneda(), Types.CHAR);
-            cstm.setObject(++index,objeto.getUsaDocumento(), Types.BOOLEAN);
-            cstm.setObject(++index,updateD, Types.BOOLEAN);
-            Array inArray =Objects.nonNull(aDestinoCompra)?cnx.createArrayOf(String.format(DestinoCompraUDT.TYPE_NAME, schema),aDestinoCompra):null;
-            cstm.setObject(++index,inArray, Types.ARRAY);
+            cstm.setObject(++index, accion, Types.CHAR);
+            cstm.setObject(++index, objeto.getId(), Types.INTEGER);
+            cstm.setObject(++index, objeto.getNumero(), Types.VARCHAR);
+            cstm.setObject(++index, objeto.getNombre(), Types.VARCHAR);
+            cstm.setObject(++index, objeto.getMoneda(), Types.CHAR);
+            cstm.setObject(++index, objeto.getUsaDocumento(), Types.BOOLEAN);
+            cstm.setObject(++index, updateD, Types.BOOLEAN);
+            Array inArray = Objects.nonNull(aDestinoCompra) ? cnx.createArrayOf(String.format(DestinoCompraUDT.TYPE_NAME, schema), aDestinoCompra) : null;
+            cstm.setObject(++index, inArray, Types.ARRAY);
 
             cstm.execute();
             String answer = cstm.getString(1);
-            Map<String,Object> map = mapper.readValue(answer, new TypeReference<Map<String, Object>>() {});
-            if(Objects.nonNull(map) && Objects.equals(map.get("msj"),"OK"))
-                cnx.commit();
+            Map<String, Object> map = mapper.readValue(answer, new TypeReference<Map<String, Object>>() {
+            });
+            if (Objects.nonNull(map) && Objects.equals(map.get("msj"), "OK")) cnx.commit();
             else cnx.rollback();
             return answer;
         }
