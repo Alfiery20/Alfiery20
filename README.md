@@ -41,7 +41,7 @@ Seguir creciendo como **Full Stack Developer**, contribuyendo al diseño y desar
 
 ## 🌐 Conecta conmigo
 
-💼 [LinkedIn](#)  
-💻 [GitHub](#)
+💼 [LinkedIn](https://www.linkedin.com/in/alfieryfurlong/)  
+💻 [GitHub](https://github.com/Alfiery20)
 
 ---
