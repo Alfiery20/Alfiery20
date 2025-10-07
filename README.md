@@ -1,94 +1,47 @@
-# 💻 Rodolfo Alfiery Furlong Millones
+# 👨‍💻 Rodolfo Furlong
 
-📍 **Ingeniero de Sistemas** – Universidad Nacional Pedro Ruiz Gallo  
-📧 **Correo:** alfierydev@gmail.com  
-📱 **Teléfono:** +51 966676402  
+### 💡 Software Engineer | Backend & Full Stack Developer
 
----
-
-## 👨‍💼 Perfil Profesional
-Soy **Ingeniero de Sistemas** especializado en **desarrollo backend**, análisis de requerimientos y modelado de bases de datos.  
-Cuento también con experiencia en **desarrollo frontend**, aplicando buenas prácticas y principios SOLID para asegurar soluciones **escalables, mantenibles y de alta calidad**.  
-Me considero una persona proactiva, adaptable y enfocada en la mejora continua.
+Soy **Ingeniero de Sistemas** con experiencia en el desarrollo de **aplicaciones web y APIs REST** utilizando **.NET Core, ASP.NET MVC y Angular**.  
+Apasionado por crear soluciones **eficientes, seguras y escalables**, aplicando **principios SOLID**, **patrones de diseño** y **buenas prácticas de desarrollo**.  
+Me motiva la mejora continua, el aprendizaje constante y el trabajo en equipo orientado a resultados.
 
 ---
 
-## 🧠 Habilidades Técnicas
+## ⚙️ Tech Stack
 
-### 💬 Lenguajes
-- C#
-- SQL
-- Java
-- TypeScript
-- JavaScript
-- Python
-
-### ⚙️ Frameworks y Tecnologías
-- .NET, ASP.NET, Entity Framework, Web API, MVC
-- Spring Boot
-- Angular, Ionic, jQuery, Bootstrap
-
-### 🗄️ Bases de Datos
-- SQL Server  
-- PostgreSQL  
-
-### 🧰 Otros
-- Git / GitHub  
-- Metodología Scrum  
-- Principios SOLID  
-- Patrones de diseño (Repository, Mediator, TDD)  
-- Arquitecturas MVC y Onion  
-- Depuración y optimización de código
+**Backend:** .NET Core · ASP.NET MVC · Entity Framework · SQL Server · PostgreSQL  
+**Frontend:** Angular · HTML5 · CSS3 · TypeScript · JavaScript · Bootstrap  
+**Tools & Others:** Git · Scrum · REST APIs · Clean Code · Arquitectura Onion & MVC
 
 ---
 
-## 💼 Experiencia Profesional
+## 🚀 Experiencia Destacada
 
-### 🏢 NTT DATA (septiembre 2024 – presente)
-- Análisis documentario para la gestión de features del **Banco de Crédito del Perú (BCP)**.  
-- Elaboración y ejecución de scripts SQL para el control de información.  
-
-### 🏢 Softtek (enero 2023 – septiembre 2024)
-- Desarrollo de **aplicaciones web y sistemas Core bancarios** basados en ASP.NET MVC y .NET Core.  
-- Implementación de **APIs REST** con C# y Entity Framework.  
-- Gestión de bases de datos **SQL Server** y configuración de acceso seguro mediante **HTTPS**.  
-- Desarrollo de interfaces **frontend** con Angular, HTML5, CSS3 y JavaScript.  
-- Aplicación de **principios SOLID**, **patrones de diseño** y **arquitecturas modernas** (Onion, MVC).  
-- Liderazgo en proyectos de desarrollo e implementación de sistemas de información.  
-
-### 🏢 IDE Solution (agosto 2022 – diciembre 2022)
-- Análisis de requerimientos y modelado de bases de datos.  
-- Creación de **APIs REST** para procedimientos almacenados.  
-- Implementación de **cifrado y descifrado de datos sensibles**.  
-
-### 🏫 Real Colegio del Arce (junio 2022 – agosto 2022)
-- Gestión de proyectos y análisis funcional.  
-- Creación de **modelos de bases de datos** y **procedimientos almacenados**.  
-- Desarrollo de **APIs REST** para exposición de datos.  
-
-### 💡 I2 Digital (marzo 2022 – junio 2022)
-- Desarrollo de **APIs REST** seguras y eficientes.  
-- Implementación de **procedimientos almacenados** y conexión con bases de datos.  
+- Desarrollo de **APIs REST** y **sistemas web empresariales** para el sector financiero.  
+- Implementación de soluciones seguras con **control de acceso y cifrado de datos**.  
+- Diseño de **bases de datos relacionales** y optimización de consultas SQL.  
+- Integración de **frontend Angular** con backend **.NET** para aplicaciones dinámicas y responsivas.  
+- Aplicación de **principios SOLID** y patrones de diseño como **Repository** y **Mediator**.
 
 ---
 
-## 🚀 Competencias Personales
-- Liderazgo y trabajo en equipo  
-- Comunicación efectiva  
-- Aprendizaje rápido  
-- Resolución de problemas  
-- Gestión del tiempo  
-- Enfoque en resultados y calidad  
+## 🧭 Filosofía de Trabajo
+
+> “El código limpio y escalable no es solo un objetivo técnico,  
+> es una forma de pensar y construir soluciones sostenibles.”
 
 ---
 
-## 🌐 Enlaces Profesionales
-- [LinkedIn](#) *(puedes agregar tu enlace aquí)*  
-- [GitHub](#) *(puedes agregar tu perfil de GitHub aquí)*  
+## 📈 Objetivo Profesional
+
+Seguir creciendo como **Full Stack Developer**, contribuyendo al diseño y desarrollo de soluciones tecnológicas que generen valor real y fortalezcan la innovación en los equipos de desarrollo.
 
 ---
 
-### 🏁 Objetivo
-Seguir creciendo como **desarrollador full stack**, aportando soluciones tecnológicas innovadoras, seguras y de impacto para las organizaciones, fortaleciendo mi experiencia en el ecosistema **.NET y Angular**.
+## 🌐 Conecta conmigo
+
+💼 [LinkedIn](#)  
+💻 [GitHub](#)
 
 ---
