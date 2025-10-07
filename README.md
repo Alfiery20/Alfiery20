@@ -1,16 +1,45 @@
-## Hi there 👋
+# 👋 Hola, soy Rodolfo Alfiery Furlong
 
-<!--
-**Alfiery20/Alfiery20** is a ✨ _special_ ✨ repository because its `README.md` (this file) appears on your GitHub profile.
+💻 **Ingeniero de Sistemas** | 🧠 **Desarrollador Full Stack** | 🌎 Perú
 
-Here are some ideas to get you started:
+Soy apasionado por el desarrollo backend y frontend, especializado en **.NET, Angular, Spring Boot y SQL Server**.  
+Actualmente enfocado en crear soluciones escalables, seguras y mantenibles 🚀
 
-- 🔭 I’m currently working on ...
-- 🌱 I’m currently learning ...
-- 👯 I’m looking to collaborate on ...
-- 🤔 I’m looking for help with ...
-- 💬 Ask me about ...
-- 📫 How to reach me: ...
-- 😄 Pronouns: ...
-- ⚡ Fun fact: ...
--->
+---
+
+### 🧰 Tecnologías que uso
+
+#### 🖥️ Backend
+.NET · C# · ASP.NET · Entity Framework · Spring Boot · Java
+
+#### 💻 Frontend
+Angular · TypeScript · HTML · CSS · Bootstrap
+
+#### 🗄️ Base de Datos
+SQL Server · PostgreSQL
+
+#### ☁️ DevOps / Cloud
+Azure · AWS · GitHub Actions
+
+---
+
+### 📈 Estadísticas
+
+![GitHub Stats](https://github-readme-stats.vercel.app/api?username=rodolfoalfiery&show_icons=true&theme=tokyonight)
+
+![Top Langs](https://github-readme-stats.vercel.app/api/top-langs/?username=rodolfoalfiery&layout=compact&theme=tokyonight)
+
+---
+
+### 🧩 Proyectos Destacados
+
+🔹 [FinanceTec](https://github.com/rodolfoalfiery/FinanceTec)  
+Sistema fullstack de gestión financiera con módulos administrativos y API REST.
+
+🔹 [IA Detector de Letras](https://github.com/rodolfoalfiery/ModeloLetras)  
+Red neuronal CNN entrenada para reconocer letras escritas a mano 🧠
+
+---
+
+📫 **Conecta conmigo:**
+[LinkedIn](https://www.linkedin.com/in/tuusuario) · [Portafolio](https://tuportafolio.com) · [Email](mailto:tuemail@gmail.com)
